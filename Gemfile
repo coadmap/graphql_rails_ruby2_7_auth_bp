@@ -6,6 +6,7 @@ ruby '2.7.1'
 
 gem 'rails', '~> 6.1.3', '>= 6.1.3.2'
 
+gem 'active_model_serializers', '~> 0.10'
 gem 'activerecord-import', '~> 1.0'
 gem 'bcrypt', '~> 3.1'
 gem 'bootsnap', '>= 1.4.2', require: false
