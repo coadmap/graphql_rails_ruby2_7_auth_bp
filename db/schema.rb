@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_065838) do
     t.string "password_digest", null: false, comment: "パスワードのハッシュ値"
     t.string "username", null: false, comment: "ユーザーネーム"
     t.integer "email_verification_status", default: 0, null: false, comment: "メールアドレスの確認状態"
+    t.uuid "email_verification_token", comment: "メール確認用トークン"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
