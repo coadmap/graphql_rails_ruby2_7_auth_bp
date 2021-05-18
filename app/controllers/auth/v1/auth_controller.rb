@@ -13,7 +13,7 @@ module Auth
 
         return head(401) if account.blank?
 
-        render json: account, serializer: AccountWithTokenSerializer
+        render json: { account: ::AccountSerializer.new(account).as_json, token: account.jwt }
       end
 
       def sign_up
@@ -25,7 +25,7 @@ module Auth
                                    username: sign_up_params[:username])
         AccountMailer.verification_email(@account.id).deliver_later
 
-        render json: @account, status: :created, serializer: AccountWithTokenSerializer
+        render json: { account: ::AccountSerializer.new(@account).as_json, token: @account.jwt }, status: :created
       end
 
       def sign_out
