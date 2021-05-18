@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_05_18_065838) do
+ActiveRecord::Schema.define(version: 2021_05_18_090803) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "pgcrypto"
@@ -22,6 +22,11 @@ ActiveRecord::Schema.define(version: 2021_05_18_065838) do
     t.string "username", null: false, comment: "ユーザーネーム"
     t.integer "email_verification_status", default: 0, null: false, comment: "メールアドレスの確認状態"
     t.uuid "email_verification_token", comment: "メール確認用トークン"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end
