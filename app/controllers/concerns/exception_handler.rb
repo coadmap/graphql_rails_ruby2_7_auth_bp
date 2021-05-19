@@ -1,7 +1,5 @@
 # frozen_string_literal: true
-
 # 例外対応
-# rubocop:disable Metrics/BlockLength
 module ExceptionHandler
   extend ActiveSupport::Concern
   included do
@@ -26,8 +24,9 @@ module ExceptionHandler
       json_response({ errors: [{ description: 'Unauthorized', status: 401 }] }, :unauthorized)
     end
 
-    rescue_from Errors::InvalidOTPError do |e|
-      json_response({ errors: [{ description: e.message, status: 403 }] }, :forbidden)
+    rescue_from Errors::InvalidEmailError do
+      json_response({ errors: [{ description: '入力されたメールアドレスは既に登録されています。', status: 422 }] },
+                    :unprocessable_entity)
     end
 
     def json_response(obj, status = :ok)
@@ -35,4 +34,3 @@ module ExceptionHandler
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
