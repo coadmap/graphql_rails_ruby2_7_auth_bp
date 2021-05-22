@@ -1,0 +1,79 @@
+name: Test and deploy
+
+on:
+  push:
+    branches:
+      - master
+      - staging
+      - develop
+
+env:
+  LANG: C.UTF-8
+  RAILS_ENV: test
+
+jobs:
+  rubocop:
+    runs-on: ubuntu-latest
+    container: ruby:2.7.1
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install --clean --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Rubocop
+        run: bundle exec rubocop
+
+  rspec:
+    runs-on: ubuntu-latest
+    container: ruby:2.7.1
+
+    services:
+      postgres:
+        image: postgres:11
+        ports:
+          - 5432:5432
+        env:
+          POSTGRES_USER: deploy
+          POSTGRES_PASSWORD: password
+
+    env:
+      DATABASE_HOST: postgres
+      DATABASE_NAME: tick_note_test
+      DATABASE_USERNAME: deploy
+      DATABASE_PASSWORD: password
+      APP_HOST: example.com
+      RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gem-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gem-
+
+      - name: Bundle install
+        run: |
+          gem install bundler
+          bundle install --clean --jobs 4 --retry 3 --path vendor/bundle
+
+      - name: Set up database
+        run: bundle exec rails db:setup
+
+      - name: Rspec
+        run: bundle exec rspec
