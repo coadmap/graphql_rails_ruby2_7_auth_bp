@@ -19,10 +19,10 @@ module JWT
         jti = Jti.create!
 
         payload = {
-            iat: iat,
-            exp: exp,
-            jti: jti.id,
-            sub: id
+          iat: iat,
+          exp: exp,
+          jti: jti.id,
+          sub: id
         }
 
         JWT::Helper.encode(payload)
@@ -32,11 +32,11 @@ module JWT
     class_methods do
       def authenticate!(token)
         payload, _header = JWT::Helper.decode(
-            token,
-            algorithm: 'HS256',
-            verify_jti: proc { |jti|
-              Jti.exists?(jti)
-            }
+          token,
+          algorithm: 'HS256',
+          verify_jti: proc { |jti|
+            Jti.exists?(jti)
+          }
         )
 
         find(payload['sub'])

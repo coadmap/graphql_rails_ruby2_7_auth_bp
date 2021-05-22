@@ -24,6 +24,7 @@ ActiveRecord::Schema.define(version: 2021_05_18_090803) do
     t.uuid "email_verification_token", comment: "メール確認用トークン"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["email"], name: "index_accounts_on_email", unique: true
   end
 
   create_table "jtis", id: :uuid, default: -> { "gen_random_uuid()" }, comment: "JWTのホワイトリスト", force: :cascade do |t|

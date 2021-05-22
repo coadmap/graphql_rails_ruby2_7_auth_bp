@@ -11,5 +11,7 @@ class CreateAccounts < ActiveRecord::Migration[6.1]
 
       t.timestamps
     end
+
+    add_index :accounts, :email, unique: true
   end
 end

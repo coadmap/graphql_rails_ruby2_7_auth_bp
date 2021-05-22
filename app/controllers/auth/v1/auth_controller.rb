@@ -46,6 +46,7 @@ module Auth
       end
 
       private
+
       def sign_up_params
         params.require(:account).permit(:email, :username, :password)
       end
