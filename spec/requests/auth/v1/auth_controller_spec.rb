@@ -1,9 +1,8 @@
 # frozen_string_literal: true
-
 require 'rails_helper'
 
 RSpec.describe Auth::V1::AuthController, type: :request do
-  let_it_be(:account) { create(:account) }
+  let!(:account) { create(:account) }
 
   describe 'POST /auth/v1/sign_in' do
     subject(:request) { post auth_v1_sign_in_path, params: params }
