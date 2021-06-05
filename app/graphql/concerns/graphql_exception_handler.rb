@@ -16,20 +16,20 @@ module GraphqlExceptionHandler
 
     rescue_from ActiveRecord::RecordInvalid do |e|
       fail GraphQL::ExecutionError.new("RecordInvalid: #{e.message}", extensions: {
-          code: ErrorCode::RECORD_INVALID
-      })
+                                         code: ErrorCode::RECORD_INVALID
+                                       })
     end
 
     rescue_from ActionController::ParameterMissing do |e|
       fail GraphQL::ExecutionError.new("ParameterMissing: #{e.message}", extensions: {
-          code: ErrorCode::ARGUMENT_ERROR
-      })
+                                         code: ErrorCode::ARGUMENT_ERROR
+                                       })
     end
 
     rescue_from JWT::DecodeError do |e|
       fail GraphQL::ExecutionError.new("JWT::DecodeError: #{e&.message}", extensions: {
-          code: ErrorCode::UNAUTHORIZED_ERROR
-      })
+                                         code: ErrorCode::UNAUTHORIZED_ERROR
+                                       })
     end
   end
 end
