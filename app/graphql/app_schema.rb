@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 # AppSchema
 class AppSchema < GraphQL::Schema
+  include ::GraphqlExceptionHandler
+
   mutation(Types::MutationType)
   query(Types::QueryType)
 
