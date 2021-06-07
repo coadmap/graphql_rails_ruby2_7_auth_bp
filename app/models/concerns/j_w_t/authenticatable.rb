@@ -15,7 +15,7 @@ module JWT
 
       def jwt
         iat = Time.now.to_i
-        exp = iat + 7 * 3600 # 有効期限は1週間 FIXME: 環境変数とかで設定できる方が良いかも
+        exp = iat + 7 * 24 * 3600 # 有効期限は1週間 FIXME: 環境変数とかで設定できる方が良いかも
         jti = Jti.create!
 
         payload = {
