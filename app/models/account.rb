@@ -25,7 +25,7 @@ class Account < ApplicationRecord
   def avatar_url
     url_for(avatar)
   end
-  
+
   def hogehoge
     nil
   end
