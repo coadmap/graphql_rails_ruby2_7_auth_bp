@@ -29,4 +29,8 @@ class Account < ApplicationRecord
   def hogehoge
     nil
   end
+
+  def fugafuga
+    nil
+  end
 end
