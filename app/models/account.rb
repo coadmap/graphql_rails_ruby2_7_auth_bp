@@ -33,4 +33,8 @@ class Account < ApplicationRecord
   def fugafuga
     nil
   end
+
+  def hey
+    nil
+  end
 end
